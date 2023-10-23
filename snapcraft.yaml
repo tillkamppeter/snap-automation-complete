@@ -41,7 +41,7 @@ parts:
   app-1:
     source: https://github.com/tillkamppeter/versioning-example-app-1
     source-type: git
-    source-tag: '0.1.0'
+    source-tag: '0.1.1'
     source-depth: 1
 # ext:updatesnap
 #   version-format:
