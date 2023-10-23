@@ -41,18 +41,37 @@ parts:
   app-1:
     source: https://github.com/tillkamppeter/versioning-example-app-1
     source-type: git
+    source-tag: '0.1.0'
+    source-depth: 1
+# ext:updatesnap
+#   version-format:
+#     lower-than: '2'
+#     no-9x-revisions: true
     plugin: make
     override-pull: |
       craftctl default
       craftctl set version=$(git describe --tags --abbrev=10)
 
   app-2:
-    source: https://github.com/tillkamppeter/versioning-example-app-2/archive/refs/tags/0.1.0.tar.gz
+    source: https://github.com/tillkamppeter/versioning-example-app-2
+    source-type: git
+    source-tag: '0.1.0'
+    source-depth: 1
+# ext:updatesnap
+#   version-format:
+#     lower-than: '2'
+#     no-9x-revisions: true
     plugin: make
 
   app-3:
     source: https://github.com/tillkamppeter/versioning-example-app-3
     source-type: git
+    source-tag: '0.1.0'
+    source-depth: 1
+# ext:updatesnap
+#   version-format:
+#     lower-than: '2'
+#     no-9x-revisions: true
     plugin: dump
     organize:
       app-3: usr/bin/
