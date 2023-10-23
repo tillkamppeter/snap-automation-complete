@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "This is $SNAP_NAME, version $SNAP_VERSION"
+
+echo "This Snap was built using the following components:"
+
+$SNAP/usr/bin/app-1
+$SNAP/usr/bin/app-2
+$SNAP/usr/bin/app-3

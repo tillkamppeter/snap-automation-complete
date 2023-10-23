@@ -1,0 +1,68 @@
+name: snap-automation-example
+adopt-info: app-1
+summary: Example Snap to demonstrate release automation
+description: |
+  This Snap packages 3 components provided by external GIT
+  repositories.  Releases of these 3 components are marked by GIT
+  tags.
+
+  The first application, app-1, is the principal application which we
+  are snapping here, therefore we derive the Snap's version number
+  from app-1.  app-2 and app-3 are auxiliary apps needed by app-1 and
+  therefore we have to include them in this Snap.
+
+  We use this example to demonstrate automating new releases of this
+  Snap whenever a new release of at least one of the 3 components gets
+  issued, to never be behind with Snap package of our app in the Snap
+  Store.
+
+  For this we will use the scripting developed for Ubuntu Core Desktop
+  and Ubuntu in general, as described in this Ubuntu blog:
+
+      https://ubuntu.com/blog/improving-snap-maintenance-with-automation
+
+  and hosted on the Ubuntu GitHub:
+
+      https://github.com/ubuntu/desktop-snaps
+
+  Note that this Snap is using only trivial application producing nothing
+  more than static terminal messages. So if you stumble upon it in the Snap
+  Store, do not install it.
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict
+base: core22
+
+apps:
+  snap-automation-example:
+    command: usr/bin/example-app
+
+parts:
+  app-1:
+    source: https://github.com/tillkamppeter/versioning-example-app-1
+    source-type: git
+    plugin: make
+    override-pull: |
+      craftctl default
+      craftctl set version=$(git describe --tags --abbrev=10)
+
+  app-2:
+    source: https://github.com/tillkamppeter/versioning-example-app-2/archive/refs/tags/0.1.0.tar.gz
+    plugin: make
+
+  app-3:
+    source: https://github.com/tillkamppeter/versioning-example-app-3
+    source-type: git
+    plugin: dump
+    organize:
+      app-3: usr/bin/
+    prime:
+      - usr/bin/app-3
+
+  scripts:
+    source: .
+    plugin: dump
+    organize:
+      example-app: usr/bin/
+    prime:
+      - usr/bin/example-app
